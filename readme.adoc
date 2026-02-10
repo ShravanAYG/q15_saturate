@@ -1,6 +1,6 @@
 = RISC-V Audiomark - Coding Challenge
 
-Implimented by Shravan A Y \<shravanay205@gmail.com\>
+Implimented by Shravan A Y <shravanay205@gmail.com>
 
 This repo contains implementation the following function in C:
 
