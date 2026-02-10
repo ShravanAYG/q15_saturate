@@ -6,8 +6,11 @@ This repo contains implementation the following function in C:
 
 ``void q15_axpy_rvv(const int16_t *a, const int16_t *b, int16_t *y, int n, int16_t alpha);``
 
-that computes, ```for all i in [0..n):
-y[i]=sat_q15(a[i]+α⋅b[i])y[i]```
+that computes, 
+....
+for all i in [0..n):
+	y[i]=sat_q15(a[i]+α*b[i])y[i]
+....
 
 == Implementation Overview
 
@@ -28,11 +31,35 @@ This version is used as a reference for verification.
 . Saturation and narrowing back to Q15
 . Vector store (``vse16``)
 
+=== Design Choices
+. Widening is done to prevent overflow during multiplication and accumilation
+. Explicit saturation is used to ensure bit-for-bit equivalence with scalar reference
+. The implementation is vector length agnostic using ``vsetvl``
+. No assumptions are made about VLEN or microarchitecture
+
 == Building:
 ``make``
 
 == Running:
 ``qemu-riscv32 axpy-rvv-q15.elf``
+
+
+== Results
+....
+$ qemu-riscv32 axpy-rvv-q15.elf
+Cycles ref: 443980
+Verify RVV: OK (max diff = 0)
+Cycles RVV: 210920
+....
+
+Since there is randomness, i took the average
+
+....
+$ python avg-res.py
+Average scalar cycles : 363844.00
+Average RVV cycles : 172988.40
+Speedup : 2.10x
+....
 
 == Implimentation github link
 https://github.com/ShravanAYG/q15_saturate/tree/main
