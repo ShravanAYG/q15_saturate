@@ -12,6 +12,7 @@ that computes, ``for all i in [0..n):``
 
 === Scalar Reference:
 The scalar implementation performs:
+
 . Q15 × Q15 multiply
 . Accumulation with a Q15 addend
 . Saturation to the int16_t range
