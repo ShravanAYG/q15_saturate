@@ -1,0 +1,32 @@
+= RISC-V Audiomark - Coding Challenge
+
+This repo contains implementation the following function in C:
+
+``void q15_axpy_rvv(const int16_t *a, const int16_t *b, int16_t *y, int n, int16_t alpha);``
+
+that computes, ``for all i in [0..n):``
+``y[i]=sat_q15(a[i]+α⋅b[i])y[i]``
+
+== Implementation Overview
+
+=== Scalar Reference:
+The scalar implementation performs:
+. Q15 × Q15 multiply
+. Accumulation with a Q15 addend
+. Saturation to the int16_t range
+
+This version is used as a reference for verification.
+
+=== The RVV implementation uses:
+. Vector agnostic loops via ``vsetvl``
+. 16-bit vector load (``vle16``)
+. Widen multiply (``vwmul``)
+. Widen accumulation in 32-bit lanes
+. Saturation and narrowing back to Q15
+. Vector store (``vse16``)
+
+== Building:
+``make``
+
+== Running:
+``qemu-riscv32 axpy-rvv-q15.elf``

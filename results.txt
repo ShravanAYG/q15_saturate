@@ -1,0 +1,3 @@
+Average scalar cycles : 363844.00
+Average RVV cycles : 172988.40
+Speedup : 2.10x
